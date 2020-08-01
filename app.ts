@@ -12,9 +12,17 @@ const buttonElement = document.querySelector('button')!;
 const numResults: number[] = [];
 const textResults: string[] = [];
 
+// Note: If you have a class or constructor function, its name can be used as a name as well (as with Date)
+
 // type alias (good for unions)
 type NumOrString = number | string;
 type Result = { val: number; timestamp: Date };
+
+// interfaces allow you to define structure of an object (if just defining structure of object, can use either interface or type alias. Interfaces are more common for that purpose. However, interfaces can be used to force classes to implement certain methods and functionalities)
+interface ResultObj {
+  val: number;
+  timestamp: Date;
+}
 
 // To compile to JavaScript, run tsc (having globally installed TypeScript on computer with npm i -g typescript). Compiles all TS files, while taking the tsconfig.json file into account (which enables strict mode). If targeting a specific file, e.g., tsc app.js, config file is ignored. However, IDE always picks up config file (errors shown in TS file)
 function add(num1: NumOrString, num2: NumOrString) {
@@ -29,7 +37,7 @@ function add(num1: NumOrString, num2: NumOrString) {
   return +num1 + +num2;
 }
 
-function printResult(resultObj: Result) {
+function printResult(resultObj: ResultObj) {
   console.log(resultObj.val);
 }
 
