@@ -12,8 +12,12 @@ const buttonElement = document.querySelector('button')!;
 const numResults: number[] = [];
 const textResults: string[] = [];
 
+// type alias (good for unions)
+type NumOrString = number | string;
+type Result = { val: number; timestamp: Date };
+
 // To compile to JavaScript, run tsc (having globally installed TypeScript on computer with npm i -g typescript). Compiles all TS files, while taking the tsconfig.json file into account (which enables strict mode). If targeting a specific file, e.g., tsc app.js, config file is ignored. However, IDE always picks up config file (errors shown in TS file)
-function add(num1: number | string, num2: number | string) {
+function add(num1: NumOrString, num2: NumOrString) {
   // "type guard": running different code based on types we get for values
   // JS typeof operator provides types as strings
   if (typeof num1 === 'number' && typeof num2 === 'number') {
@@ -25,7 +29,7 @@ function add(num1: number | string, num2: number | string) {
   return +num1 + +num2;
 }
 
-function printResult(resultObj: { val: number; timestamp: Date }) {
+function printResult(resultObj: Result) {
   console.log(resultObj.val);
 }
 
