@@ -4,7 +4,11 @@
 var num1Element = document.getElementById('num1');
 var num2Element = document.getElementById('num2');
 // type is inferred by TypeScript (it knows it's a button since query select by button tag, so when entering buttonElement, addEventListener comes up as a method. It knows that when selecting button with querySelector, we get an HTMLButtonElement, the inferred type, one of the many built-in types supported by TS)
+// Exclamation mark means expression in front of it could be null, but know it isn't. Makes TS take HTMLButtonElement as only value (and not null)
 var buttonElement = document.querySelector('button');
+// By default, array type is any[]
+var numResults = [];
+var textResults = [];
 // To compile to JavaScript, run tsc (having globally installed TypeScript on computer with npm i -g typescript). Compiles all TS files, while taking the tsconfig.json file into account (which enables strict mode). If targeting a specific file, e.g., tsc app.js, config file is ignored. However, IDE always picks up config file (errors shown in TS file)
 function add(num1, num2) {
     // "type guard": running different code based on types we get for values
@@ -18,12 +22,17 @@ function add(num1, num2) {
     // Mixed (number and string) types
     return +num1 + +num2;
 }
+function printResult(resultObj) {
+    console.log(resultObj.val);
+}
 buttonElement.addEventListener('click', function () {
     var num1 = num1Element.value;
     var num2 = num2Element.value;
     // value property always has a return type of string, so using unary plus to convert to number
     var result = add(+num1, +num2);
+    numResults.push(result);
     var stringResult = add(num1, num2);
-    console.log(result);
-    console.log(stringResult);
+    textResults.push(stringResult);
+    printResult({ val: result, timestamp: new Date() });
+    console.log(numResults, textResults);
 });

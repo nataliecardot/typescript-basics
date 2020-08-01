@@ -8,6 +8,10 @@ const num2Element = document.getElementById('num2') as HTMLInputElement;
 // Exclamation mark means expression in front of it could be null, but know it isn't. Makes TS take HTMLButtonElement as only value (and not null)
 const buttonElement = document.querySelector('button')!;
 
+// By default, array type is any[]
+const numResults: number[] = [];
+const textResults: string[] = [];
+
 // To compile to JavaScript, run tsc (having globally installed TypeScript on computer with npm i -g typescript). Compiles all TS files, while taking the tsconfig.json file into account (which enables strict mode). If targeting a specific file, e.g., tsc app.js, config file is ignored. However, IDE always picks up config file (errors shown in TS file)
 function add(num1: number | string, num2: number | string) {
   // "type guard": running different code based on types we get for values
@@ -30,8 +34,9 @@ buttonElement.addEventListener('click', () => {
   const num2 = num2Element.value;
   // value property always has a return type of string, so using unary plus to convert to number
   const result = add(+num1, +num2);
+  numResults.push(result as number);
   const stringResult = add(num1, num2);
-  console.log(result);
-  console.log(stringResult);
+  textResults.push(stringResult as string);
   printResult({ val: result as number, timestamp: new Date() });
+  console.log(numResults, textResults);
 });
