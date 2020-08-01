@@ -8,8 +8,9 @@ const num2Element = document.getElementById('num2') as HTMLInputElement;
 // Exclamation mark means expression in front of it could be null, but know it isn't. Makes TS take HTMLButtonElement as only value (and not null)
 const buttonElement = document.querySelector('button')!;
 
+// generic type: a type that interacts with another type. Array is a great example; it's a type on its own, but it interacts with another type: the type inside the array
 // By default, array type is any[]
-const numResults: number[] = [];
+const numResults: Array<number> = [];
 const textResults: string[] = [];
 
 // Note: If you have a class or constructor function, its name can be used as a name as well (as with Date)
@@ -51,4 +52,16 @@ buttonElement.addEventListener('click', () => {
   textResults.push(stringResult as string);
   printResult({ val: result as number, timestamp: new Date() });
   console.log(numResults, textResults);
+});
+
+// A promise is an example of a generic type, because it resolves to a value, a value that is the generic type for the promise
+// Note: had to set target to es6 in tsconfig.json (es5 by default) and enter tsc so config is taken into account in order to use promise, an ES6 feature
+const myPromise = new Promise<string>((resolve, reject) => {
+  setTimeout(() => {
+    resolve('It worked!');
+  }, 1000);
+});
+
+myPromise.then((result) => {
+  console.log(result.split('w'));
 });
